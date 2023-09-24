@@ -19,15 +19,9 @@ def fetch_un_data(indicator, country="all", year="2020"):
         f"token={api_key}"
     )
     response = requests.get(url)
+    print(response.text)  # Print the response content for debugging
     data = response.json()
     return data
-try:
-    response = requests.get(url)
-    response.raise_for_status()  # Raise an exception for HTTP errors
-    data = response.json()
-except requests.exceptions.RequestException as e:
-    st.error(f"An error occurred: {e}")
-    data = None  # Set data to None to indicate an error
 
 
 # Fetch population data
