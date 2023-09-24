@@ -41,13 +41,26 @@ st.write(filtered_df.describe())
 
 # Create a bar chart for GDP by country
 st.write("### GDP Comparison")
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar(df["Country"], df["GDP (USD)"])
+ax.set_xlabel("Country")
+ax.set_ylabel("GDP (USD)")
+ax.set_title("GDP Comparison")
+st.pyplot(fig)
 st.set_option('deprecation.showPyplotGlobalUse', False)
-plt.figure(figsize=(10, 6))
-plt.bar(df["Country"], df["GDP (USD)"])
-plt.xlabel("Country")
-plt.ylabel("GDP (USD)")
-plt.title("GDP Comparison")
-st.pyplot()
+
+
+# Create a line chart for GDP growth by country
+st.write("### GDP Growth Comparison")
+fig, ax = plt.subplots(figsize=(10, 6))
+for country in df["Country"]:
+    country_data = df[df["Country"] == country]
+    ax.plot(country_data["Year"], country_data["GDP Growth (%)"], label=country)
+ax.set_xlabel("Year")
+ax.set_ylabel("GDP Growth (%)")
+ax.set_title("GDP Growth Comparison")
+ax.legend()
+st.pyplot(fig)
 
 # Create a line chart for GDP growth by country
 st.write("### GDP Growth Comparison")
