@@ -21,6 +21,9 @@ def fetch_un_data(indicator, country="all", year="2020"):
     response = requests.get(url)
     data = response.json()
     return data
+response = requests.get(url)
+print(response.text)  # Print the response content
+data = response.json()
 
 # Fetch population data
 
