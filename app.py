@@ -1,43 +1,57 @@
-import requests
 import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Example API URLs
-population_url = "https://your-un-api-url/population"
-gdp_url = "https://your-un-api-url/gdp"
+# Mock data (replace this with real data or API integration)
+data = {
+    "Country": ["USA", "China", "India", "Brazil", "Russia"],
+    "Year": [2020, 2020, 2020, 2020, 2020],
+    "Population": [331002651, 1444216107, 1380004385, 212559417, 145934462],
+    "GDP (USD)": [21433225, 14342932, 2875148, 1839755, 1710000],
+    "GDP Growth (%)": [2.3, 6.1, -7.3, -4.1, -3.1],
+}
 
-def fetch_data(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        return data
-    else:
-        return None
+df = pd.DataFrame(data)
 
-population_data = fetch_data(population_url)
-gdp_data = fetch_data(gdp_url)
-
-# Load data
-population_df = pd.DataFrame(population_data)
-gdp_df = pd.DataFrame(gdp_data)
-
-# Streamlit app
+# Streamlit App
 st.title("UN Data Analysis")
 
-st.header("Population Data")
-st.write(population_df.head())
+# Sidebar for user input
+st.sidebar.header("Filters")
 
-st.header("GDP Data")
-st.write(gdp_df.head())
+# Create a filter for selecting data by country and year
+selected_country = st.sidebar.selectbox("Select Country", df["Country"].unique())
+selected_year = st.sidebar.slider("Select Year", min_value=df["Year"].min(), max_value=df["Year"].max(), value=df["Year"].max())
 
-st.subheader("Population Distribution")
-st.bar_chart(population_df['population'])
+# Filter the data based on user input
+filtered_df = df[(df["Country"] == selected_country) & (df["Year"] == selected_year)]
 
-st.subheader("GDP Distribution")
-st.bar_chart(gdp_df['gdp'])
+# Display basic statistics
+st.write(f"### Basic Statistics for {selected_country} in {selected_year}")
+st.write(filtered_df.describe())
 
-# You can add more visualizations and data analysis here
+# Create a bar chart for GDP by country
+st.write("### GDP Comparison")
+plt.figure(figsize=(10, 6))
+plt.bar(df["Country"], df["GDP (USD)"])
+plt.xlabel("Country")
+plt.ylabel("GDP (USD)")
+plt.title("GDP Comparison")
+st.pyplot()
 
+# Create a line chart for GDP growth by country
+st.write("### GDP Growth Comparison")
+plt.figure(figsize=(10, 6))
+for country in df["Country"]:
+    country_data = df[df["Country"] == country]
+    plt.plot(country_data["Year"], country_data["GDP Growth (%)"], label=country)
+plt.xlabel("Year")
+plt.ylabel("GDP Growth (%)")
+plt.title("GDP Growth Comparison")
+plt.legend()
+st.pyplot()
 
+# Display the data table
+st.write("### Data Table")
+st.write(filtered_df)
