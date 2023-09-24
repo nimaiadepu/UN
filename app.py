@@ -82,3 +82,12 @@ plt.pie(gdp_by_country, labels=gdp_by_country.index, autopct='%1.1f%%', startang
 plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 st.pyplot()
 st.write("**Conclusion**: This pie chart visualizes the distribution of GDP (in USD) among different countries. It highlights the relative economic contributions of each nation.")
+# Create a line chart for Population increment over the years
+st.write("### Population Increment Over the Years")
+fig, ax = plt.subplots(figsize=(10, 6))
+selected_country_data = df[df["Country"] == selected_country]
+ax.plot(selected_country_data["Year"], selected_country_data["Population"].diff().fillna(0), marker='o', linestyle='-', color='b')
+ax.set_xlabel("Year")
+ax.set_ylabel("Population Increment")
+ax.set_title(f"Population Increment for {selected_country} Over the Years")
+st.pyplot(fig)
