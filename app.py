@@ -29,7 +29,7 @@ for country in countries:
 df = pd.DataFrame(data)
 
 # Streamlit App
-st.title("UN Data Analysis")
+st.title("Country Data Analysis")
 
 # Sidebar for user input
 st.sidebar.header("Filters")
