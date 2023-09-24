@@ -53,9 +53,10 @@ st.pyplot(fig)
 # Create a line chart for GDP growth by country
 st.write("### GDP Growth Comparison")
 fig, ax = plt.subplots(figsize=(10, 6))
-for country in df["Country"].unique():
+colors = ['b', 'g', 'r', 'c', 'm']
+for idx, country in enumerate(df["Country"].unique()):
     country_data = df[(df["Country"] == country)]
-    ax.plot(country_data["Year"], country_data["GDP Growth (%)"], label=country)
+    ax.plot(country_data["Year"], country_data["GDP Growth (%)"], label=country, color=colors[idx], marker='o', linestyle='-')
 ax.set_xlabel("Year")
 ax.set_ylabel("GDP Growth (%)")
 ax.set_title("GDP Growth Comparison")
