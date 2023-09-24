@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Extend the mock data to include values till 2070
 data = {
@@ -63,10 +64,6 @@ ax.set_title("GDP Growth Comparison")
 ax.legend()
 st.pyplot(fig)
 
-# Display the data table
-st.write("### Data Table")
-st.write(filtered_df)
-
 # Create a scatter plot for Population vs. GDP
 st.write("### Population vs. GDP")
 plt.figure(figsize=(10, 6))
@@ -84,4 +81,19 @@ plt.xlabel("GDP Growth (%)")
 plt.ylabel("Frequency")
 plt.title("GDP Growth Histogram")
 st.pyplot()
+
+# Data download button
+st.sidebar.write("### Data Download")
+if st.sidebar.button("Download Data as CSV"):
+    st.sidebar.write("Downloading...")
+    csv = filtered_df.to_csv(index=False)
+    st.sidebar.download_button("Click to Download", csv, "filtered_data.csv")
+
+# Display the data table
+st.write("### Data Table")
+st.write(filtered_df)
+
+
+
+
 
