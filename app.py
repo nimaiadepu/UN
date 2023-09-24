@@ -15,7 +15,7 @@ data = {
 # Generate data for each country from 2020 to 2070
 countries = ["USA", "China", "India", "Brazil", "Russia"]
 for country in countries:
-    for year in range(2020, 2071):
+    for year in range(1973, 2023):
         data["Country"].append(country)
         data["Year"].append(year)
         data["Population"].append(np.random.randint(100_000_000, 1_500_000_000))
