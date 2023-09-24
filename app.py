@@ -2,8 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Extend the mock data to include values till 2070
+# Extend the mock data to include values from 1973 to 2023
 data = {
     "Country": [],
     "Year": [],
@@ -12,10 +13,10 @@ data = {
     "GDP Growth (%)": [],
 }
 
-# Generate data for each country from 2020 to 2070
+# Generate data for each country from 1973 to 2023
 countries = ["USA", "China", "India", "Brazil", "Russia"]
 for country in countries:
-    for year in range(1973, 2023):
+    for year in range(1973, 2024):
         data["Country"].append(country)
         data["Year"].append(year)
         data["Population"].append(np.random.randint(100_000_000, 1_500_000_000))
@@ -39,51 +40,39 @@ filtered_df = df[(df["Country"] == selected_country) & (df["Year"] == selected_y
 
 # Display basic statistics
 st.write(f"### Basic Statistics for {selected_country} in {selected_year}")
-st.write(filtered_df.describe())
+st.dataframe(filtered_df.describe(), height=200)
 
-# Create a bar chart for GDP by country
-st.write("### GDP Comparison")
+# Create a bar chart for GDP by country with better colors and labels
+st.subheader("GDP Comparison")
 fig, ax = plt.subplots(figsize=(10, 6))
-ax.bar(df["Country"], df["GDP (USD)"])
+colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
+for idx, country in enumerate(df["Country"].unique()):
+    country_data = df[(df["Country"] == country)]
+    ax.bar(country, country_data["GDP (USD)"].max(), label=country, color=colors[idx])
 ax.set_xlabel("Country")
 ax.set_ylabel("GDP (USD)")
 ax.set_title("GDP Comparison")
+ax.legend()
 st.pyplot(fig)
 
-# Create a line chart for GDP growth by country
-st.write("### GDP Growth Comparison")
+# Create a line chart for GDP growth with better colors and labels
+st.subheader("GDP Growth Over the Years")
 fig, ax = plt.subplots(figsize=(10, 6))
-colors = ['b', 'g', 'r', 'c', 'm']
+colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
 for idx, country in enumerate(df["Country"].unique()):
     country_data = df[(df["Country"] == country)]
     ax.plot(country_data["Year"], country_data["GDP Growth (%)"], label=country, color=colors[idx], marker='o', linestyle='-')
 ax.set_xlabel("Year")
 ax.set_ylabel("GDP Growth (%)")
-ax.set_title("GDP Growth Comparison")
+ax.set_title("GDP Growth Over the Years")
 ax.legend()
 st.pyplot(fig)
 
-# Create a line chart for Population increment over the years
-st.write("### Population Increment Over the Years")
-fig, ax = plt.subplots(figsize=(10, 6))
-selected_country_data = df[df["Country"] == selected_country]
-ax.plot(selected_country_data["Year"], selected_country_data["Population"].diff().fillna(0), marker='o', linestyle='-', color='b')
-ax.set_xlabel("Year")
-ax.set_ylabel("Population Increment")
-ax.set_title(f"Population Increment for {selected_country} Over the Years")
-st.pyplot(fig)
-
-# Create a pie chart to show the distribution of GDP among different countries
-st.subheader("Distribution of GDP Among Countries")
-gdp_by_country = df.groupby("Country")["GDP (USD)"].sum()
-plt.figure(figsize=(8, 8))
-plt.pie(gdp_by_country, labels=gdp_by_country.index, autopct='%1.1f%%', startangle=140)
-plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-plt
-
-# Display the data table
-st.write("### Data Table")
-st.write(filtered_df)
-
-
-
+# Create a scatter plot for Population vs. GDP
+st.subheader("Population vs. GDP")
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=filtered_df, x="Population", y="GDP (USD)")
+plt.xlabel("Population")
+plt.ylabel("GDP (USD)")
+plt.title("Population vs. GDP")
+st.pyplot()
