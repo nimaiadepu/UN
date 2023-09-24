@@ -92,8 +92,3 @@ if st.sidebar.button("Download Data as CSV"):
 # Display the data table
 st.write("### Data Table")
 st.write(filtered_df)
-
-
-
-
-
