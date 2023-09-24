@@ -26,7 +26,7 @@ for country in countries:
 df = pd.DataFrame(data)
 
 # Streamlit App
-st.title("Country analysis")
+st.title("UN Data Analysis")
 
 # Sidebar for user input
 st.sidebar.header("Filters")
@@ -54,6 +54,7 @@ ax.set_ylabel("GDP (USD)")
 ax.set_title("GDP Comparison")
 ax.legend()
 st.pyplot(fig)
+st.write("**Conclusion**: This bar chart provides a visual comparison of GDP (in USD) for selected countries in the chosen year. It illustrates the differences in economic strength among these nations.")
 
 # Create a line chart for GDP growth with better colors and labels
 st.subheader("GDP Growth Over the Years")
@@ -67,12 +68,14 @@ ax.set_ylabel("GDP Growth (%)")
 ax.set_title("GDP Growth Over the Years")
 ax.legend()
 st.pyplot(fig)
-# Create a line chart for Population increment over the years
-st.write("### Population Increment Over the Years")
-fig, ax = plt.subplots(figsize=(10, 6))
-selected_country_data = df[df["Country"] == selected_country]
-ax.plot(selected_country_data["Year"], selected_country_data["Population"].diff().fillna(0), marker='o', linestyle='-', color='b')
-ax.set_xlabel("Year")
-ax.set_ylabel("Population Increment")
-ax.set_title(f"Population Increment for {selected_country} Over the Years")
-st.pyplot(fig)
+st.write("**Conclusion**: This line chart shows the GDP growth (%) over the years for selected countries. It provides insights into the economic performance and trends of these nations.")
+
+# Create a pie chart to show the distribution of GDP among different countries
+st.subheader("Distribution of GDP Among Countries")
+gdp_by_country = df.groupby("Country")["GDP (USD)"].sum()
+plt.figure(figsize=(8, 8))
+plt.pie(gdp_by_country, labels=gdp_by_country.index, autopct='%1.1f%%', startangle=140)
+plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+st.pyplot()
+st.write("**Conclusion**: This pie chart visualizes the distribution of GDP (in USD) among different countries. It highlights the relative economic contributions of each nation.")
+
