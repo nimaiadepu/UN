@@ -67,3 +67,12 @@ ax.set_ylabel("GDP Growth (%)")
 ax.set_title("GDP Growth Over the Years")
 ax.legend()
 st.pyplot(fig)
+# Create a line chart for Population increment over the years
+st.write("### Population Increment Over the Years")
+fig, ax = plt.subplots(figsize=(10, 6))
+selected_country_data = df[df["Country"] == selected_country]
+ax.plot(selected_country_data["Year"], selected_country_data["Population"].diff().fillna(0), marker='o', linestyle='-', color='b')
+ax.set_xlabel("Year")
+ax.set_ylabel("Population Increment")
+ax.set_title(f"Population Increment for {selected_country} Over the Years")
+st.pyplot(fig)
