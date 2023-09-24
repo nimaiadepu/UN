@@ -38,9 +38,9 @@ selected_year = st.sidebar.slider("Select Year", min_value=df["Year"].min(), max
 # Filter the data based on user input
 filtered_df = df[(df["Country"] == selected_country) & (df["Year"] == selected_year)]
 
-# Display basic statistics
+# Display basic statistics without the std column
 st.write(f"### Basic Statistics for {selected_country} in {selected_year}")
-st.dataframe(filtered_df.describe())
+st.dataframe(filtered_df.describe().drop("std"))  # Drop the std column
 
 # Create a bar chart for GDP by country with better colors and labels
 st.subheader("GDP Comparison")
@@ -78,4 +78,3 @@ plt.pie(gdp_by_country, labels=gdp_by_country.index, autopct='%1.1f%%', startang
 plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 st.pyplot()
 st.write("**Conclusion**: This pie chart visualizes the distribution of GDP (in USD) among different countries. It highlights the relative economic contributions of each nation.")
-
