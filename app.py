@@ -91,3 +91,5 @@ ax.set_xlabel("Year")
 ax.set_ylabel("Population Increment")
 ax.set_title(f"Population Increment for {selected_country} Over the Years")
 st.pyplot(fig)
+# Conclusion for Population Increment chart
+st.write("**Conclusion**: The line chart illustrates the population increment over the years for the selected country. It shows how the population has changed from year to year, providing insights into demographic trends and growth patterns.")
