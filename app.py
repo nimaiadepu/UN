@@ -4,6 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Disable the Matplotlib warning
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 # Extend the mock data to include values from 1973 to 2023
 data = {
     "Country": [],
