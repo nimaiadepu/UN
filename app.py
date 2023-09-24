@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as pltimport requests
+import matplotlib.pyplot as plt
 import requests 
 # Define your API key
 api_key = "YOUR_API_KEY"
