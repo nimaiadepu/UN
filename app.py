@@ -5,12 +5,22 @@ import matplotlib.pyplot as plt
 
 # Extend the mock data to include values till 2070
 data = {
-    "Country": ["USA", "China", "India", "Brazil", "Russia"] * 11,  # Repeat each country for 11 years
-    "Year": list(range(2020, 2071)) * 5,  # Generate years from 2020 to 2070 repeated 5 times
-    "Population": [331002651, 1444216107, 1380004385, 212559417, 145934462] * 11,
-    "GDP (USD)": [21433225, 14342932, 2875148, 1839755, 1710000] * 11,
-    "GDP Growth (%)": [2.3, 6.1, -7.3, -4.1, -3.1] * 11,
+    "Country": [],
+    "Year": [],
+    "Population": [],
+    "GDP (USD)": [],
+    "GDP Growth (%)": [],
 }
+
+# Generate data for each country from 2020 to 2070
+countries = ["USA", "China", "India", "Brazil", "Russia"]
+for country in countries:
+    for year in range(2020, 2071):
+        data["Country"].append(country)
+        data["Year"].append(year)
+        data["Population"].append(np.random.randint(100_000_000, 1_500_000_000))
+        data["GDP (USD)"].append(np.random.randint(1_000_000, 25_000_000_000))
+        data["GDP Growth (%)"].append(np.random.uniform(-10, 10))
 
 df = pd.DataFrame(data)
 
@@ -43,8 +53,8 @@ st.pyplot(fig)
 # Create a line chart for GDP growth by country
 st.write("### GDP Growth Comparison")
 fig, ax = plt.subplots(figsize=(10, 6))
-for country in df["Country"]:
-    country_data = df[df["Country"] == country]
+for country in df["Country"].unique():
+    country_data = df[(df["Country"] == country)]
     ax.plot(country_data["Year"], country_data["GDP Growth (%)"], label=country)
 ax.set_xlabel("Year")
 ax.set_ylabel("GDP Growth (%)")
@@ -55,4 +65,3 @@ st.pyplot(fig)
 # Display the data table
 st.write("### Data Table")
 st.write(filtered_df)
-
