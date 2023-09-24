@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 # Extend the mock data to include values till 2070
 data = {
@@ -64,31 +63,19 @@ ax.set_title("GDP Growth Comparison")
 ax.legend()
 st.pyplot(fig)
 
-# Create a scatter plot for Population vs. GDP
-st.write("### Population vs. GDP")
-scatter_fig, scatter_ax = plt.subplots(figsize=(10, 6))
-sns.scatterplot(data=filtered_df, x="Population", y="GDP (USD)")
-scatter_ax.set_xlabel("Population")
-scatter_ax.set_ylabel("GDP (USD)")
-scatter_ax.set_title("Population vs. GDP")
-st.pyplot(scatter_fig)
-
-# Create a histogram for GDP Growth (%)
-st.write("### GDP Growth Histogram")
-histogram_fig, histogram_ax = plt.subplots(figsize=(10, 6))
-sns.histplot(filtered_df["GDP Growth (%)"], bins=20, kde=True)
-histogram_ax.set_xlabel("GDP Growth (%)")
-histogram_ax.set_ylabel("Frequency")
-histogram_ax.set_title("GDP Growth Histogram")
-st.pyplot(histogram_fig)
-
-# Data download button
-st.sidebar.write("### Data Download")
-if st.sidebar.button("Download Data as CSV"):
-    st.sidebar.write("Downloading...")
-    csv = filtered_df.to_csv(index=False)
-    st.sidebar.download_button("Click to Download", csv, "filtered_data.csv")
+# Create a line chart for Population increment over the years
+st.write("### Population Increment Over the Years")
+fig, ax = plt.subplots(figsize=(10, 6))
+selected_country_data = df[df["Country"] == selected_country]
+ax.plot(selected_country_data["Year"], selected_country_data["Population"].diff().fillna(0), marker='o', linestyle='-', color='b')
+ax.set_xlabel("Year")
+ax.set_ylabel("Population Increment")
+ax.set_title(f"Population Increment for {selected_country} Over the Years")
+st.pyplot(fig)
 
 # Display the data table
 st.write("### Data Table")
 st.write(filtered_df)
+
+
+
