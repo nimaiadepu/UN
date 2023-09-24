@@ -3,27 +3,24 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import requests 
-# Define your API key
-api_key = "YOUR_API_KEY"
 
-# Define the base URL for the UN Data API
-base_url = "http://data.un.org/Handlers/"
+# Define the URL to the UN Data CSV file
+data_url = "http://data.un.org/_Docs/SYB/CSV/SYB63_1_202009_Population,%20Surface%20Area%20and%20Density.csv"
 
-# Define a function to fetch data from the API
-def fetch_un_data(indicator, country="all", year="2020"):
-    url = (
-        f"{base_url}{indicator}.ashx?"
-        f"DataSet=POP&crID={country}&sDM=YE&sp=0&" 
-        f"tid={indicator}TH&thid=1&ts=5&" 
-        f"rcID=1&occID=5&returnhtml=false&" 
-        f"token={api_key}"
-    )
-    response = requests.get(url)
-    data = response.json()
-    return data
-response = requests.get(url)
-print(response.text)  # Print the response content
-data = response.json()
+# Streamlit App
+st.title("UN Data Analysis")
+
+# Read the data from the CSV file
+try:
+    df = pd.read_csv(data_url)
+except Exception as e:
+    st.error(f"An error occurred while fetching the data: {e}")
+    df = None
+
+# Display the data if available
+if df is not None:
+    st.subheader("Raw Data")
+    st.write(df)
 
 # Fetch population data
 
