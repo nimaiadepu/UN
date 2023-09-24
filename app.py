@@ -19,6 +19,14 @@ st.title("UN Data Analysis")
 
 # Sidebar for user input
 st.sidebar.header("Filters")
+# Assuming df contains the actual data
+min_year = df["Year"].min()
+max_year = df["Year"].max())
+
+# Create a filter for selecting data by country and year
+selected_country = st.sidebar.selectbox("Select Country", df["Country"].unique())
+selected_year = st.sidebar.slider("Select Year", min_value=min_year, max_value=max_year, value=max_year)
+
 
 # Create a filter for selecting data by country and year
 selected_country = st.sidebar.selectbox("Select Country", df["Country"].unique())
@@ -33,6 +41,7 @@ st.write(filtered_df.describe())
 
 # Create a bar chart for GDP by country
 st.write("### GDP Comparison")
+st.set_option('deprecation.showPyplotGlobalUse', False)
 plt.figure(figsize=(10, 6))
 plt.bar(df["Country"], df["GDP (USD)"])
 plt.xlabel("Country")
