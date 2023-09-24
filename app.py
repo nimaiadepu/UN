@@ -66,3 +66,22 @@ st.pyplot(fig)
 # Display the data table
 st.write("### Data Table")
 st.write(filtered_df)
+
+# Create a scatter plot for Population vs. GDP
+st.write("### Population vs. GDP")
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=filtered_df, x="Population", y="GDP (USD)")
+plt.xlabel("Population")
+plt.ylabel("GDP (USD)")
+plt.title("Population vs. GDP")
+st.pyplot()
+
+# Create a histogram for GDP Growth (%)
+st.write("### GDP Growth Histogram")
+plt.figure(figsize=(10, 6))
+sns.histplot(filtered_df["GDP Growth (%)"], bins=20, kde=True)
+plt.xlabel("GDP Growth (%)")
+plt.ylabel("Frequency")
+plt.title("GDP Growth Histogram")
+st.pyplot()
+
