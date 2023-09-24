@@ -40,7 +40,7 @@ filtered_df = df[(df["Country"] == selected_country) & (df["Year"] == selected_y
 
 # Display basic statistics
 st.write(f"### Basic Statistics for {selected_country} in {selected_year}")
-st.write(filtered_df.describe())
+st.dataframe(filtered_df.describe())
 
 # Create a bar chart for GDP by country with better colors and labels
 st.subheader("GDP Comparison")
@@ -67,20 +67,3 @@ ax.set_ylabel("GDP Growth (%)")
 ax.set_title("GDP Growth Over the Years")
 ax.legend()
 st.pyplot(fig)
-
-# Create a scatter plot for Population vs. GDP
-st.subheader("Population vs. GDP")
-fig, ax = plt.subplots(figsize=(10, 6))
-sns.scatterplot(data=filtered_df, x="Population", y="GDP (USD)")
-plt.xlabel("Population")
-plt.ylabel("GDP (USD)")
-plt.title("Population vs. GDP")
-st.pyplot(fig)
-
-# Create a pie chart to show the distribution of GDP among different countries
-st.subheader("Distribution of GDP Among Countries")
-gdp_by_country = df.groupby("Country")["GDP (USD)"].sum()
-plt.figure(figsize=(8, 8))
-plt.pie(gdp_by_country, labels=gdp_by_country.index, autopct='%1.1f%%', startangle=140)
-plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-st.pyplot()
