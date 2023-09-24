@@ -73,6 +73,14 @@ ax.set_ylabel("Population Increment")
 ax.set_title(f"Population Increment for {selected_country} Over the Years")
 st.pyplot(fig)
 
+# Create a pie chart to show the distribution of GDP among different countries
+st.subheader("Distribution of GDP Among Countries")
+gdp_by_country = df.groupby("Country")["GDP (USD)"].sum()
+plt.figure(figsize=(8, 8))
+plt.pie(gdp_by_country, labels=gdp_by_country.index, autopct='%1.1f%%', startangle=140)
+plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+plt
+
 # Display the data table
 st.write("### Data Table")
 st.write(filtered_df)
