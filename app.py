@@ -4,6 +4,36 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Create a dictionary to store user credentials (for demonstration purposes)
+user_credentials = {
+    "user1": "password1",
+    "user2": "password2",
+}
+
+# Streamlit App
+st.title("Country Data Analysis Login")
+
+# Create a login form
+username = st.text_input("Username")
+password = st.text_input("Password", type="password")
+
+# Check if the user has submitted the form
+if st.button("Login"):
+    if username in user_credentials and password == user_credentials[username]:
+        # Authentication successful
+        st.success("Login Successful! You can now access the app.")
+        # Set a session variable to remember that the user is logged in
+        st.session_state.is_authenticated = True
+    else:
+        # Authentication failed
+        st.error("Invalid credentials. Please try again.")
+
+# Check if the user is authenticated before displaying app content
+if hasattr(st.session_state, "is_authenticated") and st.session_state.is_authenticated:
+    # Display the rest of your app content here
+    st.write("Welcome to the Country Data Analysis App!")
+    # Add your charts, filters, and data analysis components here
+
 # Disable the Matplotlib warning
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
