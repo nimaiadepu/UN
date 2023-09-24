@@ -22,8 +22,6 @@ def fetch_un_data(indicator, country="all", year="2020"):
     print(response.text)  # Print the response content for debugging
     data = response.json()
     return data
-
-
 # Fetch population data
 population_data = fetch_un_data("P")
 df_population = pd.DataFrame(population_data["Data"])
