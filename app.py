@@ -1,4 +1,5 @@
 import streamlit as st
+st.set_option('deprecation.showPyplotGlobalUse', False)
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -47,8 +48,6 @@ ax.set_xlabel("Country")
 ax.set_ylabel("GDP (USD)")
 ax.set_title("GDP Comparison")
 st.pyplot(fig)
-st.set_option('deprecation.showPyplotGlobalUse', False)
-
 
 # Create a line chart for GDP growth by country
 st.write("### GDP Growth Comparison")
