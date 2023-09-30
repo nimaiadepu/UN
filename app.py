@@ -8,7 +8,10 @@ import seaborn as sns
 # Disable the Matplotlib warning
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
-# Extend the mock data to include values from 1973 to 2023
+import pandas as pd
+import numpy as np
+
+# Original data
 data = {
     "Country": [],
     "Year": [],
@@ -17,15 +20,22 @@ data = {
     "GDP Growth (%)": [],
 }
 
-# Generate data for each country from 1973 to 2023
+# Generate fixed random values for population, GDP, and GDP growth
+population_values = np.random.randint(100_000_000, 1_500_000_000, size=250)  # Generate 250 random values
+gdp_values = np.random.randint(1_000_000, 25_000_000_000, size=250)  # Generate 250 random values
+gdp_growth_values = np.random.uniform(-10, 10, size=250)  # Generate 250 random values
+
+# Generate data for each country from 1973 to 2022 with fixed random values
 countries = ["USA", "China", "India", "Brazil", "Russia"]
+value_index = 0  # Index for accessing fixed random values
 for country in countries:
-    for year in range(1973, 2024):
+    for year in range(1973, 2023):  # Generate data for 50 years (1973 to 2022)
         data["Country"].append(country)
         data["Year"].append(year)
-        data["Population"].append(np.random.randint(100_000_000, 1_500_000_000))
-        data["GDP (USD)"].append(np.random.randint(1_000_000, 25_000_000_000))
-        data["GDP Growth (%)"].append(np.random.uniform(-10, 10))
+        data["Population"].append(population_values[value_index])
+        data["GDP (USD)"].append(gdp_values[value_index])
+        data["GDP Growth (%)"].append(gdp_growth_values[value_index])
+        value_index += 1
 
 df = pd.DataFrame(data)
 
